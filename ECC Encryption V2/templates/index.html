@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ECC Secure Portal</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+<header class="app-header">
+  <h1>🔐 ECC Secure Portal</h1>
+  <p>Encrypt • Protect • Share</p>
+</header>
+
+<main>
+  <!-- Login Page -->
+  <section id="loginPage" class="page visible">
+    <div class="card">
+      <h2>🔑 Secure Login</h2>
+      <input type="text" id="username" placeholder="Username" value="admin">
+      <input type="password" id="password" placeholder="Password" value="password">
+      <button class="btn-glow" onclick="login()">Access Portal</button>
+      <p id="loginMsg" class="error"></p>
+    </div>
+  </section>
+
+  <!-- ECC Setup Page -->
+  <section id="eccPage" class="page">
+    <div class="card">
+      <h2>⚡ Elliptic Curve Key Generation</h2>
+      <p style="text-align: center; margin-bottom: 20px; color: #bbb;">
+        Generate cryptographic keys using SECP256R1 elliptic curve
+      </p>
+      <button class="btn-glow" onclick="generateKeys()">🔑 Generate Key Pair</button>
+      <button class="btn-glow" onclick="establishSecret()">🤝 Establish Shared Secret</button>
+      <div id="eccStatus" class="log"></div>
+      <div id="loadingAnim" class="loading hidden">🔄 Generating cryptographic keys...</div>
+    </div>
+  </section>
+
+  <!-- Services Page -->
+  <section id="servicePage" class="page">
+    <div class="card">
+      <h2>🔒 Encryption Services</h2>
+      <p style="text-align: center; margin-bottom: 20px; color: #bbb;">
+        Secure text and image encryption using AES-256
+      </p>
+      <div class="tab-bar">
+        <button id="tabText" class="tab-btn active" onclick="showService('text')">📝 Text Encryption</button>
+        <button id="tabImage" class="tab-btn" onclick="showService('image')">🖼️ Image Encryption</button>
+      </div>
+    </div>
+
+    <div class="services-container">
+      <!-- Text Service -->
+      <div id="textService" class="service-card card">
+        <h3>📝 Text Encryption Service</h3>
+        <textarea id="plainText" placeholder="Enter your confidential message here..." rows="4"></textarea>
+        <button class="btn-glow" onclick="encryptText()">🔒 Encrypt Message</button>
+        <div id="encryptedText" class="log"></div>
+        
+        <h4>🔓 Decrypt Message</h4>
+        <textarea id="cipherInput" placeholder="Paste encrypted hex data here..." rows="3"></textarea>
+        <button class="btn-glow" onclick="decryptText()">🔓 Decrypt Message</button>
+        <div id="decryptedText" class="log"></div>
+      </div>
+
+      <!-- Image Service -->
+      <div id="imageService" class="service-card card hidden">
+        <h3>🖼️ Image Encryption Service</h3>
+        <input type="file" id="imageFile" accept="image/*">
+        <button class="btn-glow" onclick="encryptImage()">🔒 Encrypt Image</button>
+        <div style="display: flex; gap: 10px; margin-top: 10px;">
+          <button class="btn-outline" onclick="copyEncBase64()">📋 Copy Base64</button>
+          <button class="btn-outline" onclick="downloadEncFile()">💾 Download Encrypted</button>
+        </div>
+        <div id="imageEncryptLog" class="log"></div>
+        
+        <h4>🔓 Decrypt Image</h4>
+        <textarea id="encFileBase64" placeholder="Paste encrypted base64 data here..." rows="3"></textarea>
+        <button class="btn-glow" onclick="decryptImage()">🔓 Decrypt Image</button>
+        <button class="btn-outline" onclick="downloadDecrypted()">⬇️ Download Original</button>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 30px;">
+      <button class="btn-danger" onclick="logout()">🚪 Secure Logout</button>
+    </div>
+  </section>
+</main>
+
+<footer class="app-footer">
+  <p>ECC Secure Portal © 2025 | Advanced Cryptographic Protection</p>
+</footer>
+
+<script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+</html>
